@@ -21,17 +21,11 @@ typedef struct{
 } sudoku;
 
 sudoku* input();
+void output(sudoku*);
 
 int main(int argc, char** argv){
-  int i, j;
   sudoku* s = input();
-
-#ifdef DEBUG
-  printf("INPUT\n");
-  for(i = 0; i < 9; i++)
-    for(j = 0; j < 9; j++)
-      printf("%d%c",s->grid[i][j], ",\n"[j + 1 == 9]);
-#endif
+	output(s);
 
   return EXIT_SUCCESS;
 }
@@ -70,4 +64,19 @@ sudoku* input(){
     for(j = 0; j < 9; j++)
       fscanf(in, "%d%*c", &(s->grid[i][j]));
   return s;
+}
+
+/**
+ * Prints a given sudoku.
+ * \param s the sudoku to print
+ */
+void output(sudoku* s) 
+{
+	int i, j;
+	for(i = 0;i < 9;i++)
+	{
+		for(j = 0;j < 9;j++)
+			printf("%d;", (*s).grid[i][j]);
+		printf("\n");
+	}			
 }
