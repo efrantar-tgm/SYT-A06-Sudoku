@@ -1,11 +1,11 @@
-DEPS = x.h
-OBJ = y.o z.o
+DEPS = sudoku.h
+OBJ = sudoku_main.o sudokuTools.o sudokuSolvers.o
 
 %.o : %.c $(DEPS)
-	gcc -c -o $@ $< -I
+	gcc -c -o $@ $< -I.
 
 compile: $(OBJ)
-	gcc -o Sudoku $^ -I
+	gcc -o Sudoku $^ -I.
 
 run:
 	./Sudoku
