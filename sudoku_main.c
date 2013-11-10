@@ -25,7 +25,7 @@ void output(sudoku*);
 
 int main(int argc, char** argv){
   sudoku* s = input();
-	output(s);
+  output(s);
 
   return EXIT_SUCCESS;
 }
@@ -72,11 +72,11 @@ sudoku* input(){
  */
 void output(sudoku* s) 
 {
-	int i, j;
-	for(i = 0;i < 9;i++)
-	{
-		for(j = 0;j < 9;j++)
-			printf("%d;", (*s).grid[i][j]);
-		printf("\n");
-	}			
+  int i, j;
+  for(i = 0;i < 9;i++)
+    {
+      for(j = 0;j < 9;j++)
+	printf("%d;", (*s).grid[i][j]);
+      printf("\n");
+    }			
 }
