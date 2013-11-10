@@ -5,11 +5,11 @@ OBJ = sudoku_main.o sudokuTools.o sudokuSolvers.o
 	gcc -c -o $@ $< -I.
 
 compile: $(OBJ)
-	gcc -o Sudoku $^ -I.
+	gcc -o sudoku $^ -I.
 
 run:
-	./Sudoku
+	./sudoku
 
 clean:
-	rm *.o Sudoku
+	rm *.o sudoku
 
