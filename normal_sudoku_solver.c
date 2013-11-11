@@ -1,5 +1,4 @@
-#include <stdio.h>
-#include <stdint.h>
+#include "normal_sudoku_solver.h"
 
 /*
  * From: https://github.com/AntonFagerberg/Sudoku-C/blob/master/sudoku.c

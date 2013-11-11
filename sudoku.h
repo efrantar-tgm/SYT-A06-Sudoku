@@ -1,7 +1,6 @@
 #ifndef SUDOKU_SOLVERS
-
 #define SUDOKU_SOLVERS
 
-	#include "sudokuSolvers.c"
+#include "normal_sudoku_solver.h"
 
 #endif
