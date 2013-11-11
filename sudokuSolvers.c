@@ -8,6 +8,24 @@
  * 2012 Anton Fagerberg [anton at antonfagerberg dot com]
  * wwww.antonfagerberg.com
  */
+
+/* "Near worst case" Sudoku
+ * http://en.wikipedia.org/wiki/Sudoku_algorithms#Brute-force_algorithm
+ */
+uint16_t puzzle[81] = {
+        0,0,0,                0,0,0,                0,0,0,
+        0,0,0,                0,0,4,                0,128,16,
+        0,0,1,                0,2,0,                0,0,0,
+
+        0,0,0,                16,0,64,        			0,0,0,
+        0,0,8,                0,0,0,                1,0,0,
+        0,256,0,        			0,0,0,                0,0,0,
+
+        16,0,0,               0,0,0,               0,64,4,
+        0,0,2,                0,1,0,                0,0,0,
+        0,0,0,                0,8,0,                0,0,256
+};
+
 uint8_t solve(uint8_t i) {
         // Solved it!
         if (!(i ^ 81))
