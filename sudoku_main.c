@@ -67,13 +67,22 @@ sudoku* input(){
 }
 
 /**
+ * modified original from: https://github.com/AntonFagerberg/Sudoku-C/blob/master/sudoku.c
  * Prints a given sudoku.
  * \param s the sudoku to print
  */
 void output(sudoku* s) 
 {
-  int i, j;
-  for(i = 0;i < 9;i++)
-    for(j = 0;j < 9;j++)
-      printf("%d%c", (*s).grid[i][j], ",\n"[j == 8]);
+  int i;
+  for (i = 0; i < 81; i++) {
+		if ((i % 9) == 0 &&  i != 0) // end of line
+      printf("|\n");
+  	if ((i % 27) == 0) // end of 3 cell block
+    	printf("+-------+-------+-------+\n");
+    if ((i % 3) == 0) // end of cell
+      printf("| ");
+		
+		printf("%d ", (*s).grid[i / 9][i % 9]);
+  }
+  printf("|\n+-------+-------+-------+\n"); // final line
 }
