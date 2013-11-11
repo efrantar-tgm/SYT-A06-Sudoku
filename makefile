@@ -1,5 +1,5 @@
 DEPS = sudoku.h
-OBJ = sudoku_main.o sudokuSolvers.o
+OBJ = sudoku_main.o normal_sudoku_solver.o
 
 %.o : %.c $(DEPS)
 	gcc -c -o $@ $< -I.
