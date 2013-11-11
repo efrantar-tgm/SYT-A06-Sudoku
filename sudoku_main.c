@@ -74,9 +74,6 @@ void output(sudoku* s)
 {
   int i, j;
   for(i = 0;i < 9;i++)
-    {
-      for(j = 0;j < 9;j++)
-	printf("%d;", (*s).grid[i][j]);
-      printf("\n");
-    }			
+    for(j = 0;j < 9;j++)
+      printf("%d%c", (*s).grid[i][j], ",\n"[j == 8]);
 }
