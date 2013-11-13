@@ -1,6 +1,9 @@
 #ifndef SUDOKU_SOLVERS
 #define SUDOKU_SOLVERS
 
-#include "normal_sudoku_solver.h"
+typedef struct{
+  int grid[9][9];
+  int type;
+} sudoku;
 
 #endif

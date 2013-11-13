@@ -1,35 +1,41 @@
-#include "sudoku.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "solve9x9.h"
+#include "solvex.h"
 
 #define DEBUG
 
-#define READ_FILE 0
-#define MANUAL_INPUT 1
+#define READ_FILE                   0
+#define MANUAL_INPUT                1
 
-#define NUMBER_OF_SUDOKU_TYPES 2
+#define NUMBER_OF_SUDOKU_TYPES      2
+#define SUDOKU_9X9                  0
+#define SUDOKU_X                    1
 
 const char* SUDOKU_TYPES[NUMBER_OF_SUDOKU_TYPES]={
   "Sudoku 9x9",
-  "X-Sudoku"
+  "Sudoku X"
 };
-
-typedef struct{
-  int grid[9][9];
-  int type;
-} sudoku;
 
 sudoku* input();
 void output(sudoku*);
 
 int main(int argc, char** argv){
   sudoku* s = input();
-  output(s);
+  if(s->type == SUDOKU_9X9)
+    s = solveNormal(s);
+  if(s->type == SUDOKU_X)
+    s = solveX(s);
 
+  output(s);
   return EXIT_SUCCESS;
 }
 
+/**
+ * Read the sudoku by file or by stdin input.
+ * \return the sudoku
+ */
 sudoku* input(){
   sudoku* s = malloc(sizeof(sudoku));
   int i, j, choice;
