@@ -1,5 +1,6 @@
 #include "solvex.h"
 #include <stdlib.h>
+#define LSB(x) ( 31 - __builtin_clz((unsigned int)(x)) )
 
 static uint16_t puzzle[81];
 
@@ -122,7 +123,7 @@ static int8_t solve(uint8_t i) {
 
         return puzzle[i] = 0;
 }
-#define LSB(x) ( 31 - __builtin_clz((unsigned int)(x)) )
+
 sudoku* solvex(sudoku* s){
   int i;
   sudoku* result = NULL;

@@ -10,19 +10,7 @@
 /* "Near worst case" Sudoku
  * http://en.wikipedia.org/wiki/Sudoku_algorithms#Brute-force_algorithm
  */
-static uint16_t puzzle[81] = {
-        0,0,0,                0,0,0,                0,0,0,
-        0,0,0,                0,0,4,                0,128,16,
-        0,0,1,                0,2,0,                0,0,0,
-
-        0,0,0,                16,0,64,        			0,0,0,
-        0,0,8,                0,0,0,                1,0,0,
-        0,256,0,        			0,0,0,                0,0,0,
-
-        16,0,0,               0,0,0,                0,64,4,
-        0,0,2,                0,1,0,                0,0,0,
-        0,0,0,                0,8,0,                0,0,256
-};
+static uint16_t puzzle[81];
 
 void init_global(sudoku* s);
 sudoku* convert_global();
