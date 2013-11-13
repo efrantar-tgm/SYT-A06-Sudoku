@@ -1,18 +1,7 @@
 #include "solvex.h"
+#include <stdlib.h>
 
-static uint16_t puzzle[81] = {
-        0,0,0,                0,0,0,                0,0,0,
-        0,0,0,                0,0,4,                0,128,16,
-        0,0,1,                0,2,0,                0,0,0,
-
-        0,0,0,                16,0,64,        			0,0,0,
-        0,0,8,                0,0,0,                1,0,0,
-        0,256,0,        			0,0,0,                0,0,0,
-
-        16,0,0,               0,0,0,                0,64,4,
-        0,0,2,                0,1,0,                0,0,0,
-        0,0,0,                0,8,0,                0,0,256
-};
+static uint16_t puzzle[81];
 
 static int8_t solve(uint8_t i) {
         // Solved it!
@@ -20,8 +9,9 @@ static int8_t solve(uint8_t i) {
                 return 1;
 
         // Skip the positions which are defined from the start.
-        if (puzzle[i]) 
-                return solve(i + 1);
+        if (puzzle[i]){
+           return solve(i + 1);
+        }
 
         uint8_t align = i % 9;
         uint16_t valid_numbers = puzzle[ align ];
@@ -58,7 +48,31 @@ static int8_t solve(uint8_t i) {
         valid_numbers = valid_numbers | puzzle[ align + 2 ];
         valid_numbers = valid_numbers | puzzle[ align + 11 ];
         valid_numbers = valid_numbers | puzzle[ align + 20 ];
+        
+        // Check Diagonal
 
+        if(i % 10 == 0){
+          valid_numbers = valid_numbers | puzzle[ 0 ];
+          valid_numbers = valid_numbers | puzzle[ 10 ];
+          valid_numbers = valid_numbers | puzzle[ 20 ];
+          valid_numbers = valid_numbers | puzzle[ 30 ];
+          valid_numbers = valid_numbers | puzzle[ 40 ];
+          valid_numbers = valid_numbers | puzzle[ 50 ];
+          valid_numbers = valid_numbers | puzzle[ 60 ];
+          valid_numbers = valid_numbers | puzzle[ 70 ];
+          valid_numbers = valid_numbers | puzzle[ 80 ];
+        }
+        if(i % 8 == 0){
+          valid_numbers = valid_numbers | puzzle[ 8 ];
+          valid_numbers = valid_numbers | puzzle[ 16 ];
+          valid_numbers = valid_numbers | puzzle[ 24 ];
+          valid_numbers = valid_numbers | puzzle[ 32 ];
+          valid_numbers = valid_numbers | puzzle[ 40 ];
+          valid_numbers = valid_numbers | puzzle[ 48 ];
+          valid_numbers = valid_numbers | puzzle[ 56 ];
+          valid_numbers = valid_numbers | puzzle[ 64 ];
+          valid_numbers = valid_numbers | puzzle[ 72 ];
+        }
         uint8_t next = i + 1;
         if (!(valid_numbers & 1)) {
                 puzzle[i] = 1;
@@ -108,9 +122,22 @@ static int8_t solve(uint8_t i) {
 
         return puzzle[i] = 0;
 }
-
+#define LSB(x) ( 31 - __builtin_clz((unsigned int)(x)) )
 sudoku* solvex(sudoku* s){
-
+  int i;
+  sudoku* result = NULL;
+  for(i = 0; i < 81; i++){
+      if(s->grid[i/9][i%9])
+        puzzle[i] = 1 << (s->grid[i/9][i%9] - 1);
+      else
+        puzzle[i] = 0;
+  }
+  if(solve(0)){
+    result = malloc(sizeof(sudoku));
+    for(i = 0; i < 81; i++)
+      result->grid[i/9][i%9] = LSB(puzzle[i]) + 1;
+  } 
+  return result;
 }
 
 

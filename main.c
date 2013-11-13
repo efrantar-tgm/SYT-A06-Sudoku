@@ -23,12 +23,15 @@ void output(sudoku*);
 
 int main(int argc, char** argv){
   sudoku* s = input();
+  output(s);
   if(s->type == SUDOKU_9X9)
     s = solve9x9(s);
   if(s->type == SUDOKU_X)
     s = solvex(s);
-
-  output(s);
+  if(s) 
+    output(s);
+  else
+    printf("NO SUDOKU SOLUTION\n");
   return EXIT_SUCCESS;
 }
 
