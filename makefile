@@ -1,5 +1,5 @@
-DEPS = sudoku.h
-OBJ = sudoku_main.o normal_sudoku_solver.o
+DEPS = $(wildcard *.h)
+OBJ = $(patsubst *.c, *.o, $(wildcard *.c))
 
 %.o : %.c $(DEPS)
 	gcc -c -o $@ $< -I.
