@@ -24,6 +24,9 @@ static uint16_t puzzle[81] = {
         0,0,0,                0,8,0,                0,0,256
 };
 
+void init_global(sudoku* s);
+sudoku* convert_global();
+
 static uint8_t solve(uint8_t i) {
         // Solved it!
         if (!(i ^ 81))
@@ -119,8 +122,31 @@ static uint8_t solve(uint8_t i) {
         return puzzle[i] = 0;
 }
 
-sudoku* solve9x9(sudoku* s){
+sudoku* solve9x9(sudoku* s) {
+	init_global(s);
+	solve(0);
+	return convert_global();
+}
 
+void init_global(sudoku* s) {
+	int i;
+	for(i = 0;i < 81;i++) {
+		if((*s).grid[i/9][i%9] == 0)
+			puzzle[i] = 0;
+		else
+			puzzle[i] = 1 << ((*s).grid[i/9][i%9] - 1);
+	}
+}
+
+sudoku* convert_global() {
+	int i;
+	sudoku* s = malloc(sizeof(sudoku));
+
+	for(i = 0;i < 81;i++) {
+		(*s).grid[i/9][i%9] = 32 - __builtin_clz((unsigned int)puzzle[i]);
+	}
+
+	return s;
 }
 
 
