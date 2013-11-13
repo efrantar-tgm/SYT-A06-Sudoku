@@ -24,9 +24,9 @@ void output(sudoku*);
 int main(int argc, char** argv){
   sudoku* s = input();
   if(s->type == SUDOKU_9X9)
-    s = solveNormal(s);
+    s = solve9x9(s);
   if(s->type == SUDOKU_X)
-    s = solveX(s);
+    s = solvex(s);
 
   output(s);
   return EXIT_SUCCESS;

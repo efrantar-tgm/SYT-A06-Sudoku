@@ -1,5 +1,4 @@
-#include "normal_sudoku_solver.h"
-
+#include "solve9x9.h"
 /*
  * From: https://github.com/AntonFagerberg/Sudoku-C/blob/master/sudoku.c
  * Sudoku Solver (brute-force).
@@ -11,7 +10,7 @@
 /* "Near worst case" Sudoku
  * http://en.wikipedia.org/wiki/Sudoku_algorithms#Brute-force_algorithm
  */
-uint16_t puzzle[81] = {
+static uint16_t puzzle[81] = {
         0,0,0,                0,0,0,                0,0,0,
         0,0,0,                0,0,4,                0,128,16,
         0,0,1,                0,2,0,                0,0,0,
@@ -25,7 +24,7 @@ uint16_t puzzle[81] = {
         0,0,0,                0,8,0,                0,0,256
 };
 
-uint8_t solve(uint8_t i) {
+static uint8_t solve(uint8_t i) {
         // Solved it!
         if (!(i ^ 81))
                 return 1;
@@ -119,4 +118,9 @@ uint8_t solve(uint8_t i) {
 
         return puzzle[i] = 0;
 }
+
+sudoku* solve9x9(sudoku* s){
+
+}
+
 

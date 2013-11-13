@@ -1,11 +1,10 @@
-#ifndef NORMAL_SUDOKU_SOLVER
-#define NORMAL_SUDOKU_SOLVER
+#ifndef SUDOKU_9X9_SOLVER_INCLUDED
+#define SUDOKU_9x9_SOLVER_INCLUDED
 
 #include <stdio.h>
 #include <stdint.h>
 #include "sudoku.h"
 
-uint8_t solve(uint8_t);
 sudoku* solve9x9(sudoku*);
 
 #endif
