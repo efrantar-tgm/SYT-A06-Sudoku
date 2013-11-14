@@ -18,18 +18,21 @@ const char* SUDOKU_TYPES[NUMBER_OF_SUDOKU_TYPES]={
   "Sudoku X"
 };
 
+const char* PRETTY = "pretty";
+const char* CSV = "csv";
+
 sudoku* input();
-void output(sudoku*);
+void output(sudoku*, const char*, FILE*);
 
 int main(int argc, char** argv){
   sudoku* s = input();
-  output(s);
+  output(s, PRETTY, stdout);
   if(s->type == SUDOKU_9X9)
     s = solve9x9(s);
   if(s->type == SUDOKU_X)
     s = solvex(s);
   if(s) 
-    output(s);
+    output(s, PRETTY, stdout);
   else
     printf("NO SUDOKU SOLUTION\n");
   return EXIT_SUCCESS;
@@ -80,18 +83,24 @@ sudoku* input(){
  * Prints a given sudoku.
  * \param s the sudoku to print
  */
-void output(sudoku* s) 
+void output(sudoku* s, const char* style, FILE* out) 
 {
-  int i;
-  for (i = 0; i < 81; i++) {
-		if ((i % 9) == 0 &&  i != 0) // end of line
-      printf("|\n");
-  	if ((i % 27) == 0) // end of 3 cell block
-    	printf("+-------+-------+-------+\n");
-    if ((i % 3) == 0) // end of cell
-      printf("| ");
-		
-		printf("%d ", (*s).grid[i / 9][i % 9]);
+  int i, j;
+  if(!strcmp(style, PRETTY)){
+    for (i = 0; i < 81; i++) {
+		  if ((i % 9) == 0 &&  i != 0) // end of line
+        fprintf(out, "|\n");
+      if ((i % 27) == 0) // end of 3 cell block
+          fprintf(out, "+-------+-------+-------+\n");
+      if ((i % 3) == 0) // end of cell
+        fprintf(out, "| ");
+      
+      fprintf(out, "%d ", (*s).grid[i / 9][i % 9]);
+    }
+    fprintf(out, "|\n+-------+-------+-------+\n"); // final linei
+  }else if(!strcmp(style, CSV)){
+    for(i = 0; i < 9; i++)
+      for(j = 0; j < 9; j++)
+        printf("%d%c", s->grid[i][j], ",\n"[j == 8]);
   }
-  printf("|\n+-------+-------+-------+\n"); // final line
 }

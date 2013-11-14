@@ -1,9 +1,30 @@
 #include "solvex.h"
 #include <stdlib.h>
-#define LSB(x) ( 31 - __builtin_clz((unsigned int)(x)) )
+
+// LSB(x) returns the index of the LSB of the number x
+#define LSB(x) ( 31 - __builtin_clz((unsigned int)(x)) ) 
+
+/*
+ * From: https://github.com/AntonFagerberg/Sudoku-C/blob/master/sudoku.c
+ * Sudoku Solver (brute-force).
+ * with the purpose of beeing fast as hell. It's pretty fast.
+ * 2012 Anton Fagerberg [anton at antonfagerberg dot com]
+ * wwww.antonfagerberg.com
+ */
+
+/* "Near worst case" Sudoku
+ * http://en.wikipedia.org/wiki/Sudoku_algorithms#Brute-force_algorithm
+ */
 
 static uint16_t puzzle[81];
 
+/**
+ * Solve the Sudoku X saved in the global
+ * array 'puzzle'.
+ * \param i the i-th cell
+ * \return 1 if the solution was found
+ *      or 0 otherwise
+ */
 static int8_t solve(uint8_t i) {
         // Solved it!
         if (!(i ^ 81))
@@ -50,8 +71,7 @@ static int8_t solve(uint8_t i) {
         valid_numbers = valid_numbers | puzzle[ align + 11 ];
         valid_numbers = valid_numbers | puzzle[ align + 20 ];
         
-        // Check Diagonal
-
+        // Check Diagonals
         if(i % 10 == 0){
           valid_numbers = valid_numbers | puzzle[ 0 ];
           valid_numbers = valid_numbers | puzzle[ 10 ];
@@ -74,6 +94,7 @@ static int8_t solve(uint8_t i) {
           valid_numbers = valid_numbers | puzzle[ 64 ];
           valid_numbers = valid_numbers | puzzle[ 72 ];
         }
+
         uint8_t next = i + 1;
         if (!(valid_numbers & 1)) {
                 puzzle[i] = 1;
@@ -124,6 +145,13 @@ static int8_t solve(uint8_t i) {
         return puzzle[i] = 0;
 }
 
+/**
+ * Returns a solved Sudoku-X of 
+ * some given Sudoku-X or NULL if
+ * no solution was found.
+ * \return NULL if there is no solution or
+ *         the solved sudoku otherwise
+ */
 sudoku* solvex(sudoku* s){
   int i;
   sudoku* result = NULL;
