@@ -125,8 +125,10 @@ static uint8_t solve(uint8_t i) {
  */
 sudoku* solve9x9(sudoku* s) {
 	init_global(s);
-	solve(0);
-	return convert_global();
+	if(solve(0))
+		return convert_global();
+	
+	return NULL;
 }
 
 /**
