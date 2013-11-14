@@ -97,7 +97,7 @@ void output(sudoku* s, const char* style, FILE* out)
       
       fprintf(out, "%d ", (*s).grid[i / 9][i % 9]);
     }
-    fprintf(out, "|\n+-------+-------+-------+\n"); // final linei
+    fprintf(out, "|\n+-------+-------+-------+\n"); // final line
   }else if(!strcmp(style, CSV)){
     for(i = 0; i < 9; i++)
       for(j = 0; j < 9; j++)
