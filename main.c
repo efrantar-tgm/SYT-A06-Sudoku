@@ -68,8 +68,9 @@ sudoku* input(){
   while(scanf("%d", &choice) != 1 || !(choice == READ_FILE || choice == MANUAL_INPUT));
   
   in = stdin;
-
-  if(choice == READ_FILE){
+	
+  if(choice == READ_FILE)
+	{
     printf("Enter filename: ");
     scanf("%s", filename);
     in = fopen(filename, "r");
@@ -83,6 +84,20 @@ sudoku* input(){
   for(i = 0; i < 9; i++)
     for(j = 0; j < 9; j++)
       fscanf(in, "%d%*c", &(s->grid[i][j]));
+	
+	if(choice == MANUAL_INPUT) 
+	{
+		printf("Do you want to save this Sudoku? (y|n) \n");
+		scanf("%c", &choice);
+		if(choice == (int)'y')
+		{
+			printf("Enter filename: ");
+    	scanf("%s", filename);
+			in = fopen(filename, "w");
+			output(s, CSV, in);
+		}
+	}
+
   return s;
 }
 
@@ -111,6 +126,6 @@ void output(sudoku* s, const char* style, FILE* out)
   }else if(!strcmp(style, CSV)){ // csv print to write in in a file
     for(i = 0; i < 9; i++)
       for(j = 0; j < 9; j++)
-        fprint(*out, "%d%c", s->grid[i][j], ",\n"[j == 8]); // write in file
+        fprintf(out, "%d%c", s->grid[i][j], ",\n"[j == 8]); // write in file
   }
 }
