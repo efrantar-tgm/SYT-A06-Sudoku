@@ -10,11 +10,16 @@
 /* "Near worst case" Sudoku
  * http://en.wikipedia.org/wiki/Sudoku_algorithms#Brute-force_algorithm
  */
-static uint16_t puzzle[81];
+static uint16_t puzzle[81]; // static because the recursive solve function has to access it
 
 void init_global(sudoku* s);
 sudoku* convert_global();
 
+/**
+ * A recursive solving algorithm for a normal Sudoku puzzle.
+ * \param i the current cell number
+ * \return the next cell number
+ */
 static uint8_t solve(uint8_t i) {
         // Solved it!
         if (!(i ^ 81))
@@ -23,7 +28,8 @@ static uint8_t solve(uint8_t i) {
         // Skip the positions which are defined from the start.
         if (puzzle[i]) 
                 return solve(i + 1);
-
+				
+				/* check column */
         uint8_t align = i % 9;
         uint16_t valid_numbers = puzzle[ align ];
         valid_numbers = valid_numbers | puzzle[ align + 9 ];
@@ -34,7 +40,8 @@ static uint8_t solve(uint8_t i) {
         valid_numbers = valid_numbers | puzzle[ align + 54 ];
         valid_numbers = valid_numbers | puzzle[ align + 63 ];
         valid_numbers = valid_numbers | puzzle[ align + 72 ];
-
+				
+				/* check row */
         align = i / 9 * 9;
         valid_numbers = valid_numbers | puzzle[ align ];
         valid_numbers = valid_numbers | puzzle[ align + 1 ];
@@ -59,7 +66,8 @@ static uint8_t solve(uint8_t i) {
         valid_numbers = valid_numbers | puzzle[ align + 2 ];
         valid_numbers = valid_numbers | puzzle[ align + 11 ];
         valid_numbers = valid_numbers | puzzle[ align + 20 ];
-
+				
+				/* if numbers fits, modify the solution an call itself for the next cell */
         uint8_t next = i + 1;
         if (!(valid_numbers & 1)) {
                 puzzle[i] = 1;
@@ -110,28 +118,41 @@ static uint8_t solve(uint8_t i) {
         return puzzle[i] = 0;
 }
 
+/**
+ * Solves a regual 9x9 Sudoku puzzle.
+ * \param s the sudoku to solve
+ * \return the solved Sudoku or NULL if it could not be solved
+ */
 sudoku* solve9x9(sudoku* s) {
 	init_global(s);
 	solve(0);
 	return convert_global();
 }
 
+/**
+ * Initializes the global puzzle[] with the given Sudoku to solve it afterwards.
+ * \param s the sudoku
+ */
 void init_global(sudoku* s) {
 	int i;
 	for(i = 0;i < 81;i++) {
 		if((*s).grid[i/9][i%9] == 0)
 			puzzle[i] = 0;
 		else
-			puzzle[i] = 1 << ((*s).grid[i/9][i%9] - 1);
+			puzzle[i] = 1 << ((*s).grid[i/9][i%9] - 1); // shift bits to the right, so that the number 2 = 00000010, 3 = 000000100, ..
 	}
 }
 
+/**
+	* Converts the global (solved) Sudoku puzzle back to a Sudoku.
+	* \return the Sudoku saved in the global puzzle[]
+	*/
 sudoku* convert_global() {
 	int i;
 	sudoku* s = malloc(sizeof(sudoku));
 
 	for(i = 0;i < 81;i++) {
-		(*s).grid[i/9][i%9] = 32 - __builtin_clz((unsigned int)puzzle[i]);
+		(*s).grid[i/9][i%9] = 32 - __builtin_clz((unsigned int)puzzle[i]); // this function counts the leading 0s
 	}
 
 	return s;

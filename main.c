@@ -4,8 +4,6 @@
 #include "solve9x9.h"
 #include "solvex.h"
 
-#define DEBUG
-
 #define READ_FILE                   0
 #define MANUAL_INPUT                1
 
@@ -13,13 +11,21 @@
 #define SUDOKU_9X9                  0
 #define SUDOKU_X                    1
 
+/**
+ * filename: main.c
+ * authors: Elias Frantar <efrantar@student.tgm.ac.at>, Gary Ye<gye@student.tgm.ac.at>
+ * version: 20131114.5
+ * description: This class provides a CLI to solve normal and X-Sudoku puzzles either by loading them from a file or by directly typing them.
+ */
+
+/* contains the different types of sudokus */
 const char* SUDOKU_TYPES[NUMBER_OF_SUDOKU_TYPES]={
   "Sudoku 9x9",
   "Sudoku X"
 };
 
-const char* PRETTY = "pretty";
-const char* CSV = "csv";
+const char* PRETTY = "pretty"; // pretty print on terminal
+const char* CSV = "csv"; // for saving input in a file
 
 sudoku* input();
 void output(sudoku*, const char*, FILE*);
@@ -33,8 +39,10 @@ int main(int argc, char** argv){
     s = solvex(s);
   if(s) 
     output(s, PRETTY, stdout);
-  else
+  else {
     printf("NO SUDOKU SOLUTION\n");
+		return EXIT_FAILURE;
+	}
   return EXIT_SUCCESS;
 }
 
@@ -80,13 +88,15 @@ sudoku* input(){
 
 /**
  * modified original from: https://github.com/AntonFagerberg/Sudoku-C/blob/master/sudoku.c
- * Prints a given sudoku.
+ * Prints a given sudoku or outputs it directly in a csv-file.
  * \param s the sudoku to print
+ * \param style either pretty print or print in the file as csv
+ * \param the file to write in (null if output as a pretty print)
  */
 void output(sudoku* s, const char* style, FILE* out) 
 {
   int i, j;
-  if(!strcmp(style, PRETTY)){
+  if(!strcmp(style, PRETTY)){ // pretty print
     for (i = 0; i < 81; i++) {
 		  if ((i % 9) == 0 &&  i != 0) // end of line
         fprintf(out, "|\n");
@@ -98,9 +108,9 @@ void output(sudoku* s, const char* style, FILE* out)
       fprintf(out, "%d ", (*s).grid[i / 9][i % 9]);
     }
     fprintf(out, "|\n+-------+-------+-------+\n"); // final line
-  }else if(!strcmp(style, CSV)){
+  }else if(!strcmp(style, CSV)){ // csv print to write in in a file
     for(i = 0; i < 9; i++)
       for(j = 0; j < 9; j++)
-        printf("%d%c", s->grid[i][j], ",\n"[j == 8]);
+        fprint(*out, "%d%c", s->grid[i][j], ",\n"[j == 8]); // write in file
   }
 }
