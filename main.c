@@ -1,3 +1,10 @@
+/**
+ * filename: main.c
+ * authors: Elias Frantar <efrantar@student.tgm.ac.at>, Gary Ye<gye@student.tgm.ac.at>
+ * version: 20131114.5
+ * description: This class provides a CLI to solve normal and X-Sudoku puzzles either by loading them from a file or by directly typing them.
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -10,13 +17,6 @@
 #define NUMBER_OF_SUDOKU_TYPES      2
 #define SUDOKU_9X9                  0
 #define SUDOKU_X                    1
-
-/**
- * filename: main.c
- * authors: Elias Frantar <efrantar@student.tgm.ac.at>, Gary Ye<gye@student.tgm.ac.at>
- * version: 20131114.5
- * description: This class provides a CLI to solve normal and X-Sudoku puzzles either by loading them from a file or by directly typing them.
- */
 
 /* contains the different types of sudokus */
 const char* SUDOKU_TYPES[NUMBER_OF_SUDOKU_TYPES]={
@@ -111,6 +111,6 @@ void output(sudoku* s, const char* style, FILE* out)
   }else if(!strcmp(style, CSV)){ // csv print to write in in a file
     for(i = 0; i < 9; i++)
       for(j = 0; j < 9; j++)
-        fprint(*out, "%d%c", s->grid[i][j], ",\n"[j == 8]); // write in file
+        fprintf(out, "%d%c", s->grid[i][j], ",\n"[j == 8]); // write in file
   }
 }

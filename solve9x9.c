@@ -149,7 +149,7 @@ void init_global(sudoku* s) {
 	*/
 sudoku* convert_global() {
 	int i;
-	sudoku* s = malloc(sizeof(sudoku));
+	sudoku* s = (sudoku*)malloc(sizeof(sudoku));
 
 	for(i = 0;i < 81;i++) {
 		(*s).grid[i/9][i%9] = 32 - __builtin_clz((unsigned int)puzzle[i]); // this function counts the leading 0s
