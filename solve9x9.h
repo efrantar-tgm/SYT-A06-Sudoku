@@ -1,5 +1,5 @@
-#ifndef SUDOKU_9X9_SOLVER_INCLUDED
-#define SUDOKU_9x9_SOLVER_INCLUDED
+#ifndef SUDOKU9X9_H_INCLUDED
+#define SUDOKU9X9_H_INCLUDED
 
 #include <stdio.h>
 #include <stdint.h>

@@ -1,5 +1,5 @@
-#ifndef SUDOKU_SOLVERS
-#define SUDOKU_SOLVERS
+#ifndef SUDOKU_H_INCLUDED
+#define SUDOKU_H_INCLUDED
 
 typedef struct{
   int grid[9][9];

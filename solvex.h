@@ -1,5 +1,5 @@
-#ifndef SOLVE_X_INCLUDED
-#define SOLVE_X_INCLUDED
+#ifndef SOLVEX_H_INCLUDED
+#define SOLVEX_H_INCLUDED
 
 #include <stdint.h>
 #include "sudoku.h"
